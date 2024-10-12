@@ -11,17 +11,23 @@ app = typer.Typer()
 
 
 @app.command()
-def setting():
-    user_name = typer.prompt("Enter your name")
-    token = typer.prompt("Enter your token")
-    settings = {"discord": {"user_name": user_name, "token": token}}
-    write_json(SHIRASU_FILE, settings)
-    rich.print(f"Settings saved to {SHIRASU_FILE}")
-
-
-@app.command()
-def discord():
-    print("Discord")
+def setup(is_delete: bool = typer.Option(False, "--delete", "-d")):
+    if is_delete:
+        try:
+            SHIRASU_FILE.unlink()
+        except FileNotFoundError:
+            rich.print(f"{SHIRASU_FILE} not found")
+            exit(1)
+        rich.print(f"Settings deleted from {SHIRASU_FILE}")
+    else:
+        user_name = typer.prompt("Enter your name")
+        token = typer.prompt("Enter your token")
+        chnnel_id = typer.prompt("Enter your channel")
+        settings = {
+            "discord": {"user_name": user_name, "token": token, "channel_id": chnnel_id}
+        }
+        write_json(SHIRASU_FILE, settings)
+        rich.print(f"Settings saved to {SHIRASU_FILE}")
 
 
 if __name__ == "__main__":
