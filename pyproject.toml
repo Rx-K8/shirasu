@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "shirasu"
-version = "0.1.0"
+version = "0.1.1"
 description = ""
 authors = ["FUKUOKA Keito <keito.0o0.kirby@gmail.com>"]
 readme = "README.md"
@@ -14,6 +14,8 @@ discord-py = "^2.4.0"
 
 [tool.poetry.group.dev.dependencies]
 pyright = "^1.1.384"
+isort = "^5.13.2"
+black = "^24.10.0"
 
 [build-system]
 requires = ["poetry-core"]
