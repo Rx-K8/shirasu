@@ -4,9 +4,7 @@ from pathlib import Path
 LOG_DIR = Path(__file__).parents[1].resolve() / "logs"
 
 
-def setup_logger(
-    name: str, log_file: str, level: int = logging.INFO
-) -> logging.Logger:
+def setup_logger(name: str, log_file: str, level: int = logging.INFO) -> logging.Logger:
     format = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 
     logging.basicConfig(level=level, format=format)

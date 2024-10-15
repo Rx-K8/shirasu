@@ -21,9 +21,7 @@ def setup(is_delete: bool = typer.Option(False, "--delete", "-d")):
 
 
 @app.command()
-def send(
-    command: str, enable_discord: bool = typer.Option(False, "--discord", "-d")
-):
+def send(command: str, enable_discord: bool = typer.Option(False, "--discord", "-d")):
     if enable_discord:
         discordbot = DiscordBot.load()
         discordbot.run(command)
