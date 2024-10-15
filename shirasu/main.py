@@ -9,13 +9,15 @@ SHIRASU_FILE = Path.home() / ".shirasu" / "settings.json"
 app = typer.Typer()
 
 
-@app.callback()
-def callback():
-    pass
-
-
 @app.command()
-def setup(is_delete: bool = typer.Option(False, "--delete", "-d")):
+def setup(
+    is_delete: bool = typer.Option(
+        False, "--delete", "-d", help="Delete the settings."
+    )
+):
+    """
+    Setup.
+    """
     if is_delete:
         DiscordBot.delete()
     else:
@@ -25,9 +27,19 @@ def setup(is_delete: bool = typer.Option(False, "--delete", "-d")):
 
 
 @app.command()
-def send(
-    command: str, enable_discord: bool = typer.Option(False, "--discord", "-d")
+def notify(
+    command: str,
+    enable_discord: bool = typer.Option(
+        False, "--discord", "-d", help="Enable discord notification."
+    ),
 ):
+    """
+    Notify that the command execution is complete.
+    """
     if enable_discord:
         discordbot = DiscordBot.load()
         discordbot.run(command)
+
+
+if __name__ == "__main__":
+    app()
