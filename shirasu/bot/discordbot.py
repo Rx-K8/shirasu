@@ -14,11 +14,7 @@ logger = setup_logger(__name__, "discordbot.log")
 
 
 class DiscordBot:
-    def __init__(
-        self,
-        token: str,
-        channel_id: int,
-    ) -> None:
+    def __init__(self, token: str, channel_id: int) -> None:
         self.token = token
         self.channel_id = channel_id
         self.intents = discord.Intents.all()
