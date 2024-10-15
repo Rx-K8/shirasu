@@ -8,6 +8,12 @@ readme = "README.md"
 [tool.poetry.scripts]
 shirasu = "shirasu.main:app"
 
+[tool.black]
+line-length = 79
+
+[tool.isort]
+profile = "black"
+
 [tool.poetry.dependencies]
 python = "^3.11"
 pytest = "^8.3.3"
