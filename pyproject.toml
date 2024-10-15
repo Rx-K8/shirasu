@@ -5,6 +5,9 @@ description = ""
 authors = ["FUKUOKA Keito <keito.0o0.kirby@gmail.com>"]
 readme = "README.md"
 
+[tool.poetry.scripts]
+shirasu = "shirasu.main:app"
+
 [tool.poetry.dependencies]
 python = "^3.11"
 pytest = "^8.3.3"
