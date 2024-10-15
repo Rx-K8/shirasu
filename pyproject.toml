@@ -9,7 +9,7 @@ readme = "README.md"
 shirasu = "shirasu.main:app"
 
 [tool.black]
-line-length = 79
+line-length = 80
 
 [tool.isort]
 profile = "black"
