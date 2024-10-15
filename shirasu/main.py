@@ -1,4 +1,3 @@
-import asyncio
 from pathlib import Path
 
 import typer
@@ -9,6 +8,9 @@ SHIRASU_FILE = Path.home() / ".shirasu" / "settings.json"
 
 app = typer.Typer()
 
+@app.callback()
+def callback():
+    pass
 
 @app.command()
 def setup(is_delete: bool = typer.Option(False, "--delete", "-d")):
@@ -25,7 +27,3 @@ def send(command: str, enable_discord: bool = typer.Option(False, "--discord", "
     if enable_discord:
         discordbot = DiscordBot.load()
         discordbot.run(command)
-
-
-if __name__ == "__main__":
-    app()
