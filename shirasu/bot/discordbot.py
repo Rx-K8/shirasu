@@ -1,6 +1,6 @@
 import json
+import subprocess
 import sys
-from typing import Callable
 
 import discord
 import rich
@@ -18,21 +18,22 @@ class DiscordBot:
         self,
         token: str,
         channel_id: int,
-    ):
+    ) -> None:
         self.token = token
         self.channel_id = channel_id
         self.intents = discord.Intents.all()
         self.bot = commands.Bot(command_prefix="!", intents=self.intents)
 
     @staticmethod
-    def setup(token: str, channel_id: int):
+    def setup(token: str, channel_id: int) -> None:
         settings = {"discord": {"token": token, "channel_id": channel_id}}
         make_directory(SHIRASU_FILE.parent)
         with open(SHIRASU_FILE, "w", encoding="utf-8") as json_file:
             json.dump(settings, json_file, ensure_ascii=False, indent=4)
+        rich.print(f"Settings saved to {SHIRASU_FILE}")
 
     @staticmethod
-    def load():
+    def load() -> "DiscordBot":
         settings = {}
         try:
             with open(SHIRASU_FILE, "r", encoding="utf-8") as json_file:
@@ -48,20 +49,34 @@ class DiscordBot:
         channel_id = settings["discord"]["channel_id"]
         return DiscordBot(token=token, channel_id=channel_id)
 
-    def run(self, exec: Callable[[], None]):
+    @staticmethod
+    def delete() -> None:
+        try:
+            SHIRASU_FILE.unlink()
+        except FileNotFoundError:
+            logger.error(f"Settings file({SHIRASU_FILE}) not found.")
+            rich.print(f"{SHIRASU_FILE} not found")
+            sys.exit(1)
+        rich.print(f"Settings deleted from {SHIRASU_FILE}")
+
+    def run(self, command: str) -> None:
         @self.bot.event
         async def on_ready():
             try:
-                exec()
-                await self.send_message("Hello, world!")
+                subprocess.run(list(command.split()))
+                await self.send_message("end command!!!")
             finally:
                 await self.close()
 
         self.bot.run(self.token)
 
-    async def send_message(self, message: str):
+    async def send_message(self, message: str) -> None:
         channel = self.bot.get_channel(self.channel_id)
-        await channel.send(message)
+        if channel is None:
+            logger.error(f"Channel({self.channel_id}) not found.")
+            sys.exit(1)
+        else:
+            await channel.send(message)
 
-    async def close(self):
+    async def close(self) -> None:
         await self.bot.close()
