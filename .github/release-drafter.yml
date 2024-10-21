@@ -12,6 +12,14 @@ categories:
       - 'bug'
   - title: '🧰 Maintenance'
     label: 'chore'
+  - title: '🔧 Refactoring'
+    label: 'refactor'
+  - title: '📖 Documentation'
+    label: 'documentation'
+  - title: '⛓️ Dependency update'
+    label: 'dependencies'
+  - title: '🧩 Others'
+    label: 'others'
 change-template: '- $TITLE @$AUTHOR (#$NUMBER)'
 change-title-escapes: '\<*_&' # You can add # and @ to disable mentions, and add ` to disable code blocks.
 version-resolver:
@@ -29,3 +37,37 @@ template: |
   ## Changes
 
   $CHANGES
+
+autolabeler:
+  - label: feature
+    branch:
+      - '/^feat(ure)?[/-].+/'
+  - label: enhancement
+    branch:
+      - '/(enhancement|improve)[/-].+/'
+  - label: fix
+    branch:
+      - '/^fix[/-].+/'
+  - label: bugfix
+    branch:
+      - '/^bugfix[/-].+/'
+  - label: bug
+    branch:
+      - '/^bug[/-].+/'
+  - label: chore
+    branch:
+      - '/^chore[/-].+/'
+  - label: refactor
+    branch:
+      - '/(refactor|refactoring)[/-].+/'
+  - label: documentation
+    branch:
+      - '/^doc(umentation)[/-].+/'
+    files:
+      - '*.md'
+  - label: dependencies
+    branch:
+      - '/^dep(endencies)[/-].+/'
+  - label: others
+    branch:
+      - '/^others[/-].+/'
